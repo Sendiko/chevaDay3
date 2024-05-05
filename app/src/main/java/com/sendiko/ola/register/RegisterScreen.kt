@@ -56,23 +56,27 @@ fun RegisterScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+                .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Register",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.fillMaxWidth()
             )
-            Text(text = "Daftar akun dulu yuk!")
+            Text(
+                text = "Daftar akun dulu yuk!",
+                modifier = Modifier.fillMaxWidth()
+            )
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
                 value = usernameText,
                 onValueChange = {
                     usernameText = it
                 },
-                placeholder = { Text(text = "Pilih username kamu")}
+                placeholder = { Text(text = "Pilih username kamu") }
             )
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -80,7 +84,7 @@ fun RegisterScreen(
                 onValueChange = {
                     emailText = it
                 },
-                placeholder = { Text(text = "Masukkan email kamu")}
+                placeholder = { Text(text = "Masukkan email kamu") }
             )
             OutlinedTextField(
                 modifier = Modifier.fillMaxWidth(),
@@ -88,7 +92,7 @@ fun RegisterScreen(
                 onValueChange = {
                     passwordText = it
                 },
-                placeholder = { Text(text = "Pilih password kamu")},
+                placeholder = { Text(text = "Pilih password kamu") },
                 visualTransformation = 
                     if (!isPasswordTextVisible) PasswordVisualTransformation()
                         else VisualTransformation.None,
@@ -104,7 +108,7 @@ fun RegisterScreen(
                 onValueChange = {
                     passwordConfirmationText = it
                 },
-                placeholder = { Text(text = "Ulangi password kamu")},
+                placeholder = { Text(text = "Ulangi password kamu") },
                 visualTransformation =
                     if (!isPasswordConfirmationTextVisible) PasswordVisualTransformation()
                         else VisualTransformation.None,
@@ -115,6 +119,9 @@ fun RegisterScreen(
                 }
             )
             Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
                 onClick = { onNavigate(Destination.LoginScreen.name) },
                 content = {
                     Text(text = "Buat akun")

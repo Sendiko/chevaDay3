@@ -43,59 +43,71 @@ fun LoginScreen(
     var teksPassword by remember {
         mutableStateOf("")
     }
-    Column(
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(8.dp),
-    ) {
-
-        Image(
-            painter = painterResource(id = R.drawable.login_illustration),
-            contentDescription = "ilustrasi login"
-        )
-
-        Text(
-            text = "Login",
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-        Text(
-            text = "Silahkan masuk ke akun anda",
-            modifier = Modifier.padding(vertical = 8.dp)
-        )
-        TextField(
+    Surface {
+        Column(
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            value = teksUsername,
-            onValueChange = { teksBaru ->
-                teksUsername = teksBaru
-            },
-            placeholder = {
-                Text(text = "Masukkan username")
-            }
-        )
-        TextField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 8.dp),
-            value = teksPassword,
-            onValueChange = { teksBaru ->
-                teksPassword = teksBaru
-            },
-            placeholder = {
-                Text(text = "Masukkan password")
-            }
-        )
-        Button(onClick = { navController.navigate(Destination.DashboardScreen.name) }, modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 8.dp)) {
-            Text(text = "Login")
-        }
-        TextButton(onClick = { navController.navigate(Destination.RegisterScreen.name) }) {
-            Text(text = "Daftar")
+                .fillMaxSize()
+                .padding(8.dp),
+        ) {
+
+            Image(
+                painter = painterResource(id = R.drawable.login_illustration),
+                contentDescription = "ilustrasi login"
+            )
+
+            Text(
+                text = "Login",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+            Text(
+                text = "Silahkan masuk ke akun anda",
+                modifier = Modifier.padding(vertical = 8.dp)
+            )
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                value = teksUsername,
+                onValueChange = { teksBaru ->
+                    teksUsername = teksBaru
+                },
+                placeholder = {
+                    Text(text = "Masukkan username")
+                }
+            )
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                value = teksPassword,
+                onValueChange = { teksBaru ->
+                    teksPassword = teksBaru
+                },
+                placeholder = {
+                    Text(text = "Masukkan password")
+                }
+            )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                onClick = { navController.navigate(Destination.DashboardScreen.name) },
+                content = {
+                    Text(text = "Login")
+                }
+            )
+            TextButton(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                onClick = { navController.navigate(Destination.RegisterScreen.name) },
+                content = {
+                    Text(text = "Daftar")
+                }
+            )
         }
     }
 

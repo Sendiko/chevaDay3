@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.sendiko.ola.database.BmiData
 
 @Composable
 fun BmiCard(
@@ -27,15 +27,9 @@ fun BmiCard(
     bmiData: BmiData
 ) {
     OutlinedCard(modifier.fillMaxWidth()) {
-        // tanggal
-        // --
-        // tinggi badan: 123 | berat badan: 123   |     123
-        // --
-        // Laki laki                             |
-
         Column(
             modifier = Modifier
-                .padding(8.dp)
+                .padding(16.dp)
                 .fillMaxWidth()
         ) {
             AssistChip(onClick = {  }, label = { Text(text = bmiData.tanggal) })
@@ -73,6 +67,7 @@ fun BmiCardPrev() {
             tinggiBadan = 123,
             nilaiBmi = 123,
             gender = "Laki - laki"
-        ))
+        )
+        )
     }
 }
