@@ -1,24 +1,46 @@
 package com.sendiko.ola
 
+import android.app.Application
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.ui.Modifier
+import androidx.activity.enableEdgeToEdge
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.sendiko.ola.dashboard.DashboardScreen
+import com.sendiko.ola.inputbmi.InputBmiScreen
+import com.sendiko.ola.inputbmi.InputBmiScreenViewModel
 import com.sendiko.ola.login.LoginScreen
 import com.sendiko.ola.navigation.Destination
 import com.sendiko.ola.register.RegisterScreen
+import com.sendiko.ola.repository.ViewModelFactory
 import com.sendiko.ola.ui.theme.OlaTheme
 
 class MainActivity : ComponentActivity() {
+
+    private fun <T : ViewModel> obtainViewModel(app: Application, modelClass: Class<T>): T {
+        val factory = ViewModelFactory.getInstance(app)
+        return ViewModelProvider(this, factory)[modelClass]
+    }
+
+    private val inputBmiViewModel by lazy {
+        obtainViewModel(requireNotNull(application), InputBmiScreenViewModel::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+
+        // Room database
+
+        // Appdatabase.kt
+        // Entity = Tabel = bmiTbale
+        // Dao, Data Access Object = getdata, savedata, update data
+
         setContent {
             OlaTheme {
                 val navController = rememberNavController()
@@ -59,7 +81,8 @@ class MainActivity : ComponentActivity() {
                                 InputBmiScreen(
                                     onNavigateBack = {
                                         navController.popBackStack()
-                                    }
+                                    },
+                                    viewModel = inputBmiViewModel
                                 )
                             }
                         )

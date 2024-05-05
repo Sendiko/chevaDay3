@@ -16,6 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sendiko.ola.database.BmiData
 import com.sendiko.ola.navigation.Destination
 
 @OptIn(ExperimentalMaterial3Api::class)
