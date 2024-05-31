@@ -12,6 +12,6 @@ data class BmiData(
     val tanggal: String,
     val beratBadan: Int,
     val tinggiBadan: Int,
-    val nilaiBmi: Int,
+    val nilaiBmi: Double,
     val gender: String,
 )

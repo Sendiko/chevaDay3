@@ -3,7 +3,9 @@ package com.sendiko.ola.repository
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.sendiko.ola.dashboard.DashboardScreenViewModel
 import com.sendiko.ola.inputbmi.InputBmiScreenViewModel
+import com.sendiko.ola.updatebmi.UpdateBmiScreenViewModel
 
 class ViewModelFactory private constructor(
     private val application: Application
@@ -27,6 +29,8 @@ class ViewModelFactory private constructor(
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return when {
             modelClass.isAssignableFrom(InputBmiScreenViewModel::class.java) -> InputBmiScreenViewModel(application) as T
+            modelClass.isAssignableFrom(DashboardScreenViewModel::class.java) -> DashboardScreenViewModel(application) as T
+            modelClass.isAssignableFrom(UpdateBmiScreenViewModel::class.java) -> UpdateBmiScreenViewModel(application) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

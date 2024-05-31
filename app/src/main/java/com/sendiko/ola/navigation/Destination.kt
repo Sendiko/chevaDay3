@@ -5,4 +5,5 @@ enum class Destination {
     LoginScreen,
     DashboardScreen,
     InputBmiScreen,
+    UpdateBmiScreen
 }

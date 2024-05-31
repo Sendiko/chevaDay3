@@ -1,4 +1,4 @@
-package com.sendiko.ola.inputbmi
+package com.sendiko.ola.updatebmi
 
 import android.app.Application
 import android.os.Build
@@ -8,20 +8,32 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sendiko.ola.database.AppDatabase
 import com.sendiko.ola.database.BmiData
+import com.sendiko.ola.inputbmi.Gender
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 
-class InputBmiScreenViewModel (
-    application: Application
-): ViewModel() {
+class UpdateBmiScreenViewModel(application: Application): ViewModel() {
 
     private val dao = AppDatabase.getInstance(application).dao
 
-    private val _state = MutableStateFlow(InputBmiScreenState())
+    private val _state = MutableStateFlow(UpdateBmiScreenState())
     val state = _state.asStateFlow()
+
+    fun onLoadBmiData(bmiData: BmiData) {
+        viewModelScope.launch {
+            _state.update {
+                it.copy(
+                    id = bmiData.id,
+                    tinggiBadan = bmiData.tinggiBadan.toString(),
+                    beratBadan = bmiData.beratBadan.toString(),
+                    gender = Gender.valueOf(bmiData.gender)
+                )
+            }
+        }
+    }
 
     fun onTinggiBadanChanged(value: String) {
         _state.update { it.copy(tinggiBadan = value) }
@@ -36,19 +48,20 @@ class InputBmiScreenViewModel (
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun calculateBMI() {
+    fun calclulateAndUpdate(bmiData: BmiData) {
         if (state.value.beratBadan.toIntOrNull() != null && state.value.tinggiBadan.toIntOrNull() != null){
             val result = state.value.beratBadan.toDouble() / ((state.value.tinggiBadan.toDouble() / 100) * (state.value.tinggiBadan.toDouble() / 100))
-            Log.i("BMI_LOG", "calculateBMI: $result")
             val data = BmiData(
-                tanggal = LocalDate.now().toString(),
-                beratBadan = state.value.beratBadan.toInt(),
-                tinggiBadan = state.value.tinggiBadan.toInt(),
+                id = bmiData.id,
+                tanggal = bmiData.tanggal,
+                beratBadan = bmiData.beratBadan,
+                tinggiBadan = bmiData.tinggiBadan,
                 nilaiBmi = result,
-                gender = state.value.gender.name
+                gender = bmiData.gender
             )
             viewModelScope.launch {
-                dao.insert(data)
+                Log.i("BMI_LOG", "calculateBMI: $data vms")
+                dao.update(data)
             }
         }
     }
