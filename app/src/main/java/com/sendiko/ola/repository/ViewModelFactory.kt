@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.sendiko.ola.dashboard.DashboardScreenViewModel
 import com.sendiko.ola.inputbmi.InputBmiScreenViewModel
+import com.sendiko.ola.login.LoginScreenViewModel
 import com.sendiko.ola.updatebmi.UpdateBmiScreenViewModel
 
 class ViewModelFactory private constructor(
@@ -31,6 +32,8 @@ class ViewModelFactory private constructor(
             modelClass.isAssignableFrom(InputBmiScreenViewModel::class.java) -> InputBmiScreenViewModel(application) as T
             modelClass.isAssignableFrom(DashboardScreenViewModel::class.java) -> DashboardScreenViewModel(application) as T
             modelClass.isAssignableFrom(UpdateBmiScreenViewModel::class.java) -> UpdateBmiScreenViewModel(application) as T
+            modelClass.isAssignableFrom(LoginScreenViewModel::class.java)
+                -> LoginScreenViewModel(application) as T
             else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
         }
     }

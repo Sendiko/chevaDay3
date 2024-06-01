@@ -19,6 +19,7 @@ import com.sendiko.ola.database.BmiData
 import com.sendiko.ola.inputbmi.InputBmiScreen
 import com.sendiko.ola.inputbmi.InputBmiScreenViewModel
 import com.sendiko.ola.login.LoginScreen
+import com.sendiko.ola.login.LoginScreenViewModel
 import com.sendiko.ola.navigation.Destination
 import com.sendiko.ola.register.RegisterScreen
 import com.sendiko.ola.repository.ViewModelFactory
@@ -43,6 +44,10 @@ class MainActivity : ComponentActivity() {
 
     private val updateBmiViewModel by lazy {
         obtainViewModel(requireNotNull(application), UpdateBmiScreenViewModel::class.java)
+    }
+
+    private val loginViewModel by lazy {
+        obtainViewModel(requireNotNull(application), LoginScreenViewModel::class.java)
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -78,7 +83,7 @@ class MainActivity : ComponentActivity() {
                         composable(
                             route = Destination.LoginScreen.name,
                             content = {
-                                LoginScreen(navController)
+                                LoginScreen(navController, loginViewModel)
                             }
                         )
                         composable(

@@ -12,6 +12,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,20 +31,20 @@ import com.sendiko.ola.navigation.Destination
 
 @Composable
 fun LoginScreen(
-    navController: NavController
+    navController: NavController,
+    viewModel: LoginScreenViewModel
 ) {
-    // Login
-    // Silahkan masuk ke akun anda
-    // textfield username
-    // textfield password
-    // button login
-    
-    var teksUsername by remember {
-        mutableStateOf("")
+    val screenState by viewModel.state.collectAsState()
+
+    // TODO: admin@admin.com
+    // TODO: admin12345
+
+    LaunchedEffect(key1 = screenState.isLoginSuccessful) {
+        if (screenState.isLoginSuccessful) {
+            navController.navigate(Destination.DashboardScreen.name)
+        }
     }
-    var teksPassword by remember {
-        mutableStateOf("")
-    }
+
     Surface {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -70,31 +72,34 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                value = teksUsername,
+                value = screenState.email,
                 onValueChange = { teksBaru ->
-                    teksUsername = teksBaru
+                    viewModel.onEmailChanged(teksBaru)
                 },
                 placeholder = {
-                    Text(text = "Masukkan username")
+                    Text(text = "Masukkan email")
                 }
             )
             TextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                value = teksPassword,
+                value = screenState.password,
                 onValueChange = { teksBaru ->
-                    teksPassword = teksBaru
+                    viewModel.onPasswordChanged(teksBaru)
                 },
                 placeholder = {
                     Text(text = "Masukkan password")
                 }
             )
+            Text(text = screenState.notificationMessage)
             Button(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp),
-                onClick = { navController.navigate(Destination.DashboardScreen.name) },
+                onClick = {
+                    viewModel.onLogin()
+                },
                 content = {
                     Text(text = "Login")
                 }
@@ -111,12 +116,4 @@ fun LoginScreen(
         }
     }
 
-}
-
-@Preview
-@Composable
-fun LoginScreenPrev() {
-    Surface {
-        LoginScreen(rememberNavController())
-    }
 }
